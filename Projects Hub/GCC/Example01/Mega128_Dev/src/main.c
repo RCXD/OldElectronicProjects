@@ -33,8 +33,19 @@
 int main (void)
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
-
-	board_init();
-
+	
+	//board_init();
+	
+	
 	/* Insert application code here, after the board has been initialized. */
+	DDRA=0xff;
+	PORTA=0xff;
+	
+	
+	while(1){
+		//DDRA=0b00001111;
+		//PORTA=0b0001111;
+		DDRA = 0xff;
+		PORTA = 0xff;
+	}
 }
