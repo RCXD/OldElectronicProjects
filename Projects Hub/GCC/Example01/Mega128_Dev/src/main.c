@@ -29,6 +29,8 @@
  * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
  */
 #include <asf.h>
+#include <avr/io.h>
+#include <util/delay.h>
 
 int main (void)
 {
@@ -45,7 +47,10 @@ int main (void)
 	while(1){
 		//DDRA=0b00001111;
 		//PORTA=0b0001111;
-		DDRA = 0xff;
 		PORTA = 0xff;
+		_delay_ms(500);
+		PORTA = 0x00;
+		_delay_ms(500);
+		
 	}
 }
