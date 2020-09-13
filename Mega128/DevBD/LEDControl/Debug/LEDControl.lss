@@ -116,8 +116,8 @@ Disassembly of section .text:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
 
 0000009e <main>:
-//# define F_CPU 1000000UL	//default
-#define F_CPU 8000000UL		//Fuse programming is necessary
+#include <util/delay.h>
+
 int main(void)
 {
 	/* Setup */
@@ -135,9 +135,9 @@ int main(void)
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  a4:	2f e3       	ldi	r18, 0x3F	; 63
-  a6:	3d e0       	ldi	r19, 0x0D	; 13
-  a8:	93 e0       	ldi	r25, 0x03	; 3
+  a4:	2f ef       	ldi	r18, 0xFF	; 255
+  a6:	39 e6       	ldi	r19, 0x69	; 105
+  a8:	98 e1       	ldi	r25, 0x18	; 24
   aa:	21 50       	subi	r18, 0x01	; 1
   ac:	30 40       	sbci	r19, 0x00	; 0
   ae:	90 40       	sbci	r25, 0x00	; 0
@@ -147,9 +147,9 @@ int main(void)
 		_delay_ms(1000);
 		PORTA = ~0x00;
   b6:	8b bb       	out	0x1b, r24	; 27
-  b8:	2f e3       	ldi	r18, 0x3F	; 63
-  ba:	3d e0       	ldi	r19, 0x0D	; 13
-  bc:	93 e0       	ldi	r25, 0x03	; 3
+  b8:	2f ef       	ldi	r18, 0xFF	; 255
+  ba:	39 e6       	ldi	r19, 0x69	; 105
+  bc:	98 e1       	ldi	r25, 0x18	; 24
   be:	21 50       	subi	r18, 0x01	; 1
   c0:	30 40       	sbci	r19, 0x00	; 0
   c2:	90 40       	sbci	r25, 0x00	; 0
