@@ -114,15 +114,21 @@
  *  PE0 for /R1OUT, PE1 for T1IN
  *  PE0 : Input, PE1 : Output
  */
+#ifndef DDRA
+#include <avr/io.h>
+#endif
+#ifndef F_CPU
+#include <util/delay.h>
+#endif
 
 #ifdef STEP
-#define STP_RST 0x01   //PORTA0 
-#define STP_CW  0x02   //PORTA1 
-#define STP_Clk 0x04   //PORTA2 
-#define STP_M2  0x08   //PORTA3 
-#define STP_M1  0x10   //PORTA4 
-#define STP_MOUT 0x20  //PORTA5 
-#define STP_SYNC 0x40  //PORTA6 
+#define STP_RST 1   //PORTA0 
+#define STP_CW  2   //PORTA1 
+#define STP_CLK 4   //PORTA2 
+#define STP_M2  8   //PORTA3 
+#define STP_M1  16   //PORTA4 
+#define STP_MOUT 32  //PORTA5 
+#define STP_SYNC 64  //PORTA6 
 //#define PORTA7 
 #define HALF 1
 #define QUARTER 2
@@ -132,36 +138,55 @@
 void step_init(int mode){
     DDRA |= STP_RST|STP_CW|STP_CLK|STP_M2|STP_M1|STP_SYNC;
     DDRA &= ~STP_MOUT;
+	//PORTA |= 
+	PORTA &= ~( STP_RST|STP_CW|STP_CLK|STP_SYNC );
+	
+	//debug //still failed...
+	PORTA &= ~0xff;
+	_delay_ms(1000);
+	PORTA |= 0xff;
+	_delay_ms(1000);
+	PORTA &= ~0xff;
+	_delay_ms(1000);
+	PORTA |= 0xff;
+	_delay_ms(1000);
+	
     switch(mode)
     {
         case HALF:
-        {
             //Set M1-M2 to 1-1
-            PORTA |= STP_M1|STP_M2
-            
-        }
-        break;
+            PORTA |= STP_M1|STP_M2;
+			break;
         case QUARTER:
-        {
             //Set M1-M2 to 1-0
-            PORTA |= STP_M1
-            PORTA &= ~STP_M2
-        }
-        break;
+            PORTA |= STP_M1;
+            PORTA &= ~STP_M2;
+			break;
         case EIGHTH:
-        {
             //Set M1-M2 to 0-1
-            PORTA &= ~STP_M1
-            PORTA |= STP_M2
-        }
-        break;
+            PORTA &= ~STP_M1;
+            PORTA |= STP_M2;
+			break;
         case SIXTEENTH:
-        {
             //Set M1-M2 to 0-0
-            PORTA &= ~(STP_M1&STP_M2)
-        }
-        break;
+            PORTA &= ~(STP_M1&STP_M2);
+			break;
     }
 }
 
+//void step_single(int pulses, const int duty_ms){
+void step_single(int pulses){
+	while(pulses >=0){
+		//PORTA |= STP_CLK;
+		//debug
+		PORTA |= 0xff;
+		//_delay_ms(duty_ms);
+		_delay_ms(100);
+		//PORTA &= ~STP_CLK;
+		//_delay_ms(duty_ms);
+		PORTA &= 0x00;
+		_delay_ms(100);
+		--pulses;
+	}
+}
 #endif

@@ -17,10 +17,13 @@ int main(void)
     while (1) 
     {
 		
-		PORTA = ~0xff;		//need to reverse : 1 is off
+		PORTA &= ~0xff;		//need to reverse : 1 is off
 		_delay_ms(1000);
-		PORTA = ~0x00;
+		PORTA |= 0x00;
+		_delay_ms(1000);
+		PORTA &= ~((1<<PORTA0)|(1<<PORTA7));	//Turn on
+		_delay_ms(1000);
+		PORTA |= (1<<PORTA0)|(1<<PORTA7);	//Turn off
 		_delay_ms(1000);
     }
 }
-
