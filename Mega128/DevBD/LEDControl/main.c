@@ -14,12 +14,23 @@ int main(void)
 {
 	/* Setup */
 	DDRA = 0xff;
+	PORTA = 0xff;
     while (1) 
     {
 		
-		PORTA &= ~0xff;		//need to reverse : 1 is off
+		PORTA &= ~0x45;		
+		_delay_ms(500);
+		PORTA |= 0xff;
+		_delay_ms(500);
+		
+		PORTA &= ~0xff;
 		_delay_ms(1000);
-		PORTA |= 0x00;
+		PORTA &= ~0x0f;
+		_delay_ms(1000);
+		PORTA &= ~0xf0;
+		_delay_ms(1000);
+		PORTA |= 0xff;
+		
 		_delay_ms(1000);
 		PORTA &= ~((1<<PORTA0)|(1<<PORTA7));	//Turn on
 		_delay_ms(1000);

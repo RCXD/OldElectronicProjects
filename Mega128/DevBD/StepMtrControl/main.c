@@ -9,26 +9,44 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #define STEP
-#include "MESLBoardHeader.h" // How to add??
-
+//#include "MESLBoardHeader.h" // How to add??
+//I need to debug
 
 int main(void)
 {
-	//step_init(HALF);
-	//step_init(QUARTER);
-	step_init(EIGHTH);
-	//step_init(SIXTEENTH);
-
-    _delay_ms(1000);
+	DDRA |= 
+	//Work PAUSE here
+	
+	
+	
+	
+	
+	
+	/* Failed debugging
+	while(1)
+	{
+		step_init(HALF);
+		_delay_ms(1000);
+		step_init(QUARTER);
+		_delay_ms(1000);
+		step_init(EIGHTH);
+		_delay_ms(1000);
+		step_init(SIXTEENTH);
+		_delay_ms(1000);
+	}
+	
+    //_delay_ms(1000);
 	//step_single(1, 100);
+	
 
 	
-	step_single(5);
-	_delay_ms(1000);
+	//step_single(5);
+	//_delay_ms(1000);
     while (1) 
     {
-		step_single(5);
-		_delay_ms(1000);
+		//step_single(5);
+		//_delay_ms(1000);
     }
+	*/
 }
 

@@ -135,21 +135,12 @@
 #define EIGHTH 3
 #define SIXTEENTH 4
 
+//뭔가 이해가 부족한 것 같다. 디버깅이 안됨. 본문에서 작업 먼저 할 것
 void step_init(int mode){
     DDRA |= STP_RST|STP_CW|STP_CLK|STP_M2|STP_M1|STP_SYNC;
     DDRA &= ~STP_MOUT;
-	//PORTA |= 
+	PORTA = 0x00;
 	PORTA &= ~( STP_RST|STP_CW|STP_CLK|STP_SYNC );
-	
-	//debug //still failed...
-	PORTA &= ~0xff;
-	_delay_ms(1000);
-	PORTA |= 0xff;
-	_delay_ms(1000);
-	PORTA &= ~0xff;
-	_delay_ms(1000);
-	PORTA |= 0xff;
-	_delay_ms(1000);
 	
     switch(mode)
     {
@@ -169,7 +160,7 @@ void step_init(int mode){
 			break;
         case SIXTEENTH:
             //Set M1-M2 to 0-0
-            PORTA &= ~(STP_M1&STP_M2);
+            PORTA &= ~(STP_M1|STP_M2);
 			break;
     }
 }
