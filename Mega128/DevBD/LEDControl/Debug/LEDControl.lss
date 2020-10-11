@@ -3,29 +3,29 @@ LEDControl.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000001ba  2**0
+  0 .data         00000000  00800100  00800100  00000120  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000166  00000000  00000000  00000054  2**1
+  1 .text         000000cc  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000001ba  2**0
+  2 .comment      00000030  00000000  00000000  00000120  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001ec  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000150  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  0000022c  2**0
+  4 .debug_aranges 00000020  00000000  00000000  00000190  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000a1a  00000000  00000000  0000024c  2**0
+  5 .debug_info   000008c4  00000000  00000000  000001b0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000800  00000000  00000000  00000c66  2**0
+  6 .debug_abbrev 00000800  00000000  00000000  00000a74  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000034a  00000000  00000000  00001466  2**0
+  7 .debug_line   000002a8  00000000  00000000  00001274  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  000017b0  2**2
+  8 .debug_frame  00000024  00000000  00000000  0000151c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000407  00000000  00000000  000017d4  2**0
+  9 .debug_str    0000041c  00000000  00000000  00001540  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000001f8  00000000  00000000  00001bdb  2**0
+ 10 .debug_loc    00000048  00000000  00000000  0000195c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001dd3  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  000019a4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -110,7 +110,7 @@ Disassembly of section .text:
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
   98:	02 d0       	rcall	.+4      	; 0x9e <main>
-  9a:	63 c0       	rjmp	.+198    	; 0x162 <_exit>
+  9a:	16 c0       	rjmp	.+44     	; 0xc8 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
@@ -128,136 +128,37 @@ int main(void)
   a2:	8b bb       	out	0x1b, r24	; 27
     while (1) 
     {
-		
-		PORTA &= ~0x45;		
-		_delay_ms(500);
-		PORTA |= 0xff;
-  a4:	9f ef       	ldi	r25, 0xFF	; 255
-	DDRA = 0xff;
-	PORTA = 0xff;
-    while (1) 
-    {
-		
-		PORTA &= ~0x45;		
-  a6:	8b b3       	in	r24, 0x1b	; 27
-  a8:	8a 7b       	andi	r24, 0xBA	; 186
-  aa:	8b bb       	out	0x1b, r24	; 27
+		PORTA = 0x00;
+  a4:	1b ba       	out	0x1b, r1	; 27
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  ac:	2f ef       	ldi	r18, 0xFF	; 255
-  ae:	34 e3       	ldi	r19, 0x34	; 52
-  b0:	8c e0       	ldi	r24, 0x0C	; 12
-  b2:	21 50       	subi	r18, 0x01	; 1
-  b4:	30 40       	sbci	r19, 0x00	; 0
-  b6:	80 40       	sbci	r24, 0x00	; 0
-  b8:	e1 f7       	brne	.-8      	; 0xb2 <main+0x14>
-  ba:	00 c0       	rjmp	.+0      	; 0xbc <main+0x1e>
-  bc:	00 00       	nop
-		_delay_ms(500);
-		PORTA |= 0xff;
-  be:	8b b3       	in	r24, 0x1b	; 27
-  c0:	9b bb       	out	0x1b, r25	; 27
-  c2:	2f ef       	ldi	r18, 0xFF	; 255
-  c4:	34 e3       	ldi	r19, 0x34	; 52
-  c6:	8c e0       	ldi	r24, 0x0C	; 12
-  c8:	21 50       	subi	r18, 0x01	; 1
-  ca:	30 40       	sbci	r19, 0x00	; 0
-  cc:	80 40       	sbci	r24, 0x00	; 0
-  ce:	e1 f7       	brne	.-8      	; 0xc8 <main+0x2a>
-  d0:	00 c0       	rjmp	.+0      	; 0xd2 <main+0x34>
-  d2:	00 00       	nop
-		_delay_ms(500);
-		
-		PORTA &= ~0xff;
-  d4:	8b b3       	in	r24, 0x1b	; 27
-  d6:	1b ba       	out	0x1b, r1	; 27
-  d8:	2f ef       	ldi	r18, 0xFF	; 255
-  da:	39 e6       	ldi	r19, 0x69	; 105
-  dc:	88 e1       	ldi	r24, 0x18	; 24
-  de:	21 50       	subi	r18, 0x01	; 1
-  e0:	30 40       	sbci	r19, 0x00	; 0
-  e2:	80 40       	sbci	r24, 0x00	; 0
-  e4:	e1 f7       	brne	.-8      	; 0xde <main+0x40>
-  e6:	00 c0       	rjmp	.+0      	; 0xe8 <main+0x4a>
-  e8:	00 00       	nop
-		_delay_ms(1000);
-		PORTA &= ~0x0f;
-  ea:	8b b3       	in	r24, 0x1b	; 27
-  ec:	80 7f       	andi	r24, 0xF0	; 240
-  ee:	8b bb       	out	0x1b, r24	; 27
-  f0:	2f ef       	ldi	r18, 0xFF	; 255
-  f2:	39 e6       	ldi	r19, 0x69	; 105
-  f4:	88 e1       	ldi	r24, 0x18	; 24
-  f6:	21 50       	subi	r18, 0x01	; 1
-  f8:	30 40       	sbci	r19, 0x00	; 0
-  fa:	80 40       	sbci	r24, 0x00	; 0
-  fc:	e1 f7       	brne	.-8      	; 0xf6 <main+0x58>
-  fe:	00 c0       	rjmp	.+0      	; 0x100 <main+0x62>
- 100:	00 00       	nop
-		_delay_ms(1000);
-		PORTA &= ~0xf0;
- 102:	8b b3       	in	r24, 0x1b	; 27
- 104:	8f 70       	andi	r24, 0x0F	; 15
- 106:	8b bb       	out	0x1b, r24	; 27
- 108:	2f ef       	ldi	r18, 0xFF	; 255
- 10a:	39 e6       	ldi	r19, 0x69	; 105
- 10c:	88 e1       	ldi	r24, 0x18	; 24
- 10e:	21 50       	subi	r18, 0x01	; 1
- 110:	30 40       	sbci	r19, 0x00	; 0
- 112:	80 40       	sbci	r24, 0x00	; 0
- 114:	e1 f7       	brne	.-8      	; 0x10e <main+0x70>
- 116:	00 c0       	rjmp	.+0      	; 0x118 <main+0x7a>
- 118:	00 00       	nop
-		_delay_ms(1000);
-		PORTA |= 0xff;
- 11a:	8b b3       	in	r24, 0x1b	; 27
- 11c:	9b bb       	out	0x1b, r25	; 27
- 11e:	2f ef       	ldi	r18, 0xFF	; 255
- 120:	39 e6       	ldi	r19, 0x69	; 105
- 122:	88 e1       	ldi	r24, 0x18	; 24
- 124:	21 50       	subi	r18, 0x01	; 1
- 126:	30 40       	sbci	r19, 0x00	; 0
- 128:	80 40       	sbci	r24, 0x00	; 0
- 12a:	e1 f7       	brne	.-8      	; 0x124 <main+0x86>
- 12c:	00 c0       	rjmp	.+0      	; 0x12e <main+0x90>
- 12e:	00 00       	nop
-		
-		_delay_ms(1000);
-		PORTA &= ~((1<<PORTA0)|(1<<PORTA7));	//Turn on
- 130:	8b b3       	in	r24, 0x1b	; 27
- 132:	8e 77       	andi	r24, 0x7E	; 126
- 134:	8b bb       	out	0x1b, r24	; 27
- 136:	2f ef       	ldi	r18, 0xFF	; 255
- 138:	39 e6       	ldi	r19, 0x69	; 105
- 13a:	88 e1       	ldi	r24, 0x18	; 24
- 13c:	21 50       	subi	r18, 0x01	; 1
- 13e:	30 40       	sbci	r19, 0x00	; 0
- 140:	80 40       	sbci	r24, 0x00	; 0
- 142:	e1 f7       	brne	.-8      	; 0x13c <main+0x9e>
- 144:	00 c0       	rjmp	.+0      	; 0x146 <main+0xa8>
- 146:	00 00       	nop
-		_delay_ms(1000);
-		PORTA |= (1<<PORTA0)|(1<<PORTA7);	//Turn off
- 148:	8b b3       	in	r24, 0x1b	; 27
- 14a:	81 68       	ori	r24, 0x81	; 129
- 14c:	8b bb       	out	0x1b, r24	; 27
- 14e:	2f ef       	ldi	r18, 0xFF	; 255
- 150:	39 e6       	ldi	r19, 0x69	; 105
- 152:	88 e1       	ldi	r24, 0x18	; 24
- 154:	21 50       	subi	r18, 0x01	; 1
- 156:	30 40       	sbci	r19, 0x00	; 0
- 158:	80 40       	sbci	r24, 0x00	; 0
- 15a:	e1 f7       	brne	.-8      	; 0x154 <main+0xb6>
- 15c:	00 c0       	rjmp	.+0      	; 0x15e <main+0xc0>
- 15e:	00 00       	nop
- 160:	a2 cf       	rjmp	.-188    	; 0xa6 <main+0x8>
+  a6:	2f e7       	ldi	r18, 0x7F	; 127
+  a8:	3b e2       	ldi	r19, 0x2B	; 43
+  aa:	98 e1       	ldi	r25, 0x18	; 24
+  ac:	21 50       	subi	r18, 0x01	; 1
+  ae:	30 40       	sbci	r19, 0x00	; 0
+  b0:	90 40       	sbci	r25, 0x00	; 0
+  b2:	e1 f7       	brne	.-8      	; 0xac <main+0xe>
+  b4:	00 c0       	rjmp	.+0      	; 0xb6 <main+0x18>
+  b6:	00 00       	nop
+		_delay_ms(990);
 
-00000162 <_exit>:
- 162:	f8 94       	cli
+		PORTA = 0xff;
+  b8:	8b bb       	out	0x1b, r24	; 27
+  ba:	ef e1       	ldi	r30, 0x1F	; 31
+  bc:	fe e4       	ldi	r31, 0x4E	; 78
+  be:	31 97       	sbiw	r30, 0x01	; 1
+  c0:	f1 f7       	brne	.-4      	; 0xbe <main+0x20>
+  c2:	00 c0       	rjmp	.+0      	; 0xc4 <main+0x26>
+  c4:	00 00       	nop
+  c6:	ee cf       	rjmp	.-36     	; 0xa4 <main+0x6>
 
-00000164 <__stop_program>:
- 164:	ff cf       	rjmp	.-2      	; 0x164 <__stop_program>
+000000c8 <_exit>:
+  c8:	f8 94       	cli
+
+000000ca <__stop_program>:
+  ca:	ff cf       	rjmp	.-2      	; 0xca <__stop_program>

@@ -14,7 +14,7 @@
 
 int main(void)
 {
-	DDRA |= 
+	//DDRA |= 
 	//Work PAUSE here
 	
 	

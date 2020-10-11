@@ -17,7 +17,12 @@ int main(void)
 	PORTA = 0xff;
     while (1) 
     {
-		
+		PORTA = 0x00;
+		_delay_ms(990);
+
+		PORTA = 0xff;
+		_delay_ms(10);
+		/*
 		PORTA &= ~0x45;		
 		_delay_ms(500);
 		PORTA |= 0xff;
@@ -36,5 +41,6 @@ int main(void)
 		_delay_ms(1000);
 		PORTA |= (1<<PORTA0)|(1<<PORTA7);	//Turn off
 		_delay_ms(1000);
+		*/
     }
 }
