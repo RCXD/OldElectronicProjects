@@ -11,15 +11,70 @@
 	3) ADC out
 	4) Plotting ECG
 	5) Timer-Interrupt
+ 3. Peripheral info
+	1) GLCD : parallel, SGB1286411, KS0108 Driver
  */ 
 
+//Basic avr//
 #include <avr/io.h>
 #include <avr/interrupt.h>
+
+//utilities//
+#define F_CPU 8000000UL
 #include <util/delay.h>
+
+//visual in/out//
+#include <stdio.h>			/* Include std i/o library file */
+//#include "Font_Header.h"	//unnecessary
+
+/* GLCD Pinout Information
+ * DevB/D Pinout : VDD, VSS, VO, DB0~DB7, /CS1, /CS2, RST, R/W, RS, E, VEE, LEDA, LEDK
+ *	Based on S6B0108B
+ * SGB1286411 Pinout(Assume) : VSS, VDD, VO, RS, R/W, E, DB0~DB7, CS1, CS2, /RST, VEE, A, K
+ *  Based on KS0108
+ */
+
+/* GLCD pinout Matching Table
+ * pin_num		1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20
+ * DevBD		Vdd	Vss	Vo	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	/CS1/CS2RST	R/W	RS	E	Vee	A	K
+ * Matching		2	1	3	7	8	9	10	11	12	13	14	/15	/16	/17	5	4	6	18	19	20		
+ * SGB1286411	Vss	Vdd	Vo	RS	R/W	E	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	CS1	CS2	/RSTVee	A	K
+ * Matching: DevBD -> SGB1286411
+ * Method : DevBD -> Jumper Connector -> GLCD(Bread Board)
+ */
+
+//GLCD Configuration//
+#define Data_Port		PORTC		//For DevBD
+#define Command_Port	PORTF		//For DevBD
+#define Data_Port_Dir	DDRC		//For DevBD
+#define Command_Port_Dir DDRF		//For DevBD
+#define RS		PF4
+#define RW		PF3
+#define EN		PF5
+#define CS1		PF0
+#define CS2		PF1
+#define RST		PF2
+
+#define TotalPage	 8		//Purpose?
+
+/* Reference: https://www.electronicwings.com/avr-atmega/graphical-lcd-128x64-interfacing-with-atmega1632
+#define Data_Port	 PORTA			// Define data port for GLCD 
+#define Command_Port	 PORTC		// Define command port for GLCD 
+#define Data_Port_Dir	 DDRA		// Define data port for GLCD 
+#define Command_Port_Dir DDRC		// Define command port for GLCD 
+#define RS		 PC0				// Define control pins 
+#define RW		 PC1
+#define EN		 PC2
+#define CS1		 PC3
+#define CS2		 PC4
+#define RST		 PC5
+
+#define TotalPage	 8
+*/
 
 //initiation//
 void BD_init(void);							//예비
-void GLCD_init(void);						//GLCD 초기화: 제어포트, 데이터 포트
+void GLCD_init(void);						//GLCD 초기화: 제어포트, 데이터 포트 - Mode : parallel
 void TI_init(void);
 
 //Core functions//
@@ -38,11 +93,13 @@ void FND_seg_num(int seg, int font);
 void LED_Debug(void);
 void FND_Arm(void);
 void setFreq(void/*F_CPU*/);
+void GLCD_String(char page_no, char *str);
 
 int main(void)
 {
     BD_init();
 	GLCD_init();
+	GLCD_ClearAll();
 	TI_init();
 	
     while (1) 
@@ -55,8 +112,9 @@ int main(void)
 //Interrupt Subroutines//
 ISR (TIMER1_OVF_vect)    // Timer1 ISR
 {
-	PORTD ^= (1 << LED);
-	TCNT1 = 63974;   // for 1 sec at 16 MHz
+	//PORTD ^= (1 << LED);					//visual output
+	//TCNT1 = 63974;   // for 1 sec at 16 MHz // (65536-63974)*1024 ~= 16MHz
+	TCNT1 = 57724;		//(65536-57724)*1024 ~= 8MHz
 }
 
 //initiation//
@@ -64,16 +122,25 @@ void BD_init(void){
 	return;
 }
 void GLCD_init(void){
-	return;
+	Data_Port_Dir = 0xFF;
+	Command_Port_Dir = 0xFF;
+	/* Select both left & right half of display & Keep reset pin high */
+	Command_Port |= (1 << CS1) | (1 << CS2) | (1 << RST);
+	_delay_ms(20);
+	GLCD_Command(0x3E);		/* Display OFF */
+	GLCD_Command(0x40);		/* Set Y address (column=0) */
+	GLCD_Command(0xB8);		/* Set x address (page=0) */
+	GLCD_Command(0xC0);		/* Set z address (start line=0) */
+	GLCD_Command(0x3F);		/* Display ON */
 }
 void TI_init(void){
-	DDRD = (0x01 << LED);     //Configure the PORTD4 as output
+	//DDRD = (0x01 << LED);					//Configure the PORTD4 as output
 		
 	//TCNT1 = 63974;   // for 1 sec at 16 MHz
-	
+	TCNT1 = 57724;		//for 1 sec at 8MHz
 
 	TCCR1A = 0x00;
-	TCCR1B = (1<<CS10) | (1<<CS12);;  // Timer mode with 1024 prescler
+	TCCR1B = (1<<CS10) | (1<<CS12);;  // Timer mode with 1024 prescaler
 	TIMSK = (1 << TOIE1) ;   // Enable timer1 overflow interrupt(TOIE1)
 	sei();        // Enable global interrupts by setting global interrupt enable bit in SREG
 	return;
@@ -85,13 +152,37 @@ void GLCD_Plot(char y[128]){
 	return;
 }
 void GLCD_Command(char Command){
-	return;
+	Data_Port = Command;		/* Copy command on data pin */
+	Command_Port &= ~(1 << RS);	/* Make RS LOW for command register*/
+	Command_Port &= ~(1 << RW);	/* Make RW LOW for write operation */
+	Command_Port |=  (1 << EN);	/* HIGH-LOW transition on Enable */
+	_delay_us(5);
+	Command_Port &= ~(1 << EN);
+	_delay_us(5);
 }
 void GLCD_Data(char Data){
-	return;
+	Data_Port = Data;		/* Copy data on data pin */
+	Command_Port |=  (1 << RS);	/* Make RS HIGH for data register */
+	Command_Port &= ~(1 << RW);	/* Make RW LOW for write operation */
+	Command_Port |=  (1 << EN);	/* HIGH-LOW transition on Enable */
+	_delay_us(5);
+	Command_Port &= ~(1 << EN);
+	_delay_us(5);
 }
 void GLCD_ClearAll(void){
-	return;
+	int i,j;
+	/* Select both left & right half of display */
+	Command_Port |= (1 << CS1) | (1 << CS2);
+	for(i = 0; i < TotalPage; i++)
+	{
+		GLCD_Command((0xB8) + i);/* Increment page */
+		for(j = 0; j < 64; j++)
+		{
+			GLCD_Data(0);	/* Write zeros to all 64 column */
+		}
+	}
+	GLCD_Command(0x40);		/* Set Y address (column=0) */
+	GLCD_Command(0xB8);		/* Set x address (page=0) */
 }
 void TI_set(void/*int duty*/){
 	return;
@@ -119,3 +210,81 @@ void setFreq(void/*F_CPU*/){
 	return;
 }
 
+/* GLCD_String Function: need Font_Header.h from https://www.electronicwings.com/avr-atmega/graphical-lcd-128x64-interfacing-with-atmega1632
+void GLCD_String(char page_no, char *str) // GLCD string write function 
+{
+	unsigned int i, column;
+	unsigned int Page = ((0xB8) + page_no);
+	unsigned int Y_address = 0;
+	float Page_inc = 0.5;
+	
+	Command_Port |= (1 << CS1);	  // Select Left half of display 
+	Command_Port &= ~(1 << CS2);
+	
+	GLCD_Command(Page);
+	for(i = 0; str[i] != 0; i++)	// Print char in string till null 
+	{
+		if (Y_address > (1024-(((page_no)*128)+FontWidth)))
+		break;
+		if (str[i]!=32)
+		{
+			for (column=1; column<=FontWidth; column++)
+			{
+				if ((Y_address+column)==(128*((int)(Page_inc+0.5))))
+				{
+					if (column == FontWidth)
+					break;
+					GLCD_Command(0x40);
+					Y_address = Y_address + column;
+					Command_Port ^= (1 << CS1);
+					Command_Port ^= (1 << CS2);
+					GLCD_Command(Page + Page_inc);
+					Page_inc = Page_inc + 0.5;
+				}
+			}
+		}
+		if (Y_address>(1024-(((page_no)*128)+FontWidth)))
+		break;
+		if((font[((str[i]-32)*FontWidth)+4])==0 || str[i]==32)
+		{
+			for(column=0; column<FontWidth; column++)
+			{
+				GLCD_Data(font[str[i]-32][column]);
+				if((Y_address+1)%64==0)
+				{
+					Command_Port ^= (1 << CS1);
+					Command_Port ^= (1 << CS2);
+					GLCD_Command((Page+Page_inc));
+					Page_inc = Page_inc + 0.5;
+				}
+				Y_address++;
+			}
+		}
+		else
+		{
+			for(column=0; column<FontWidth; column++)
+			{
+				GLCD_Data(font[str[i]-32][column]);
+				if((Y_address+1)%64==0)
+				{
+					Command_Port ^= (1 << CS1);
+					Command_Port ^= (1 << CS2);
+					GLCD_Command((Page+Page_inc));
+					Page_inc = Page_inc + 0.5;
+				}
+				Y_address++;
+			}
+			GLCD_Data(0);
+			Y_address++;
+			if((Y_address)%64 == 0)
+			{
+				Command_Port ^= (1 << CS1);
+				Command_Port ^= (1 << CS2);
+				GLCD_Command((Page+Page_inc));
+				Page_inc = Page_inc + 0.5;
+			}
+		}
+	}
+	GLCD_Command(0x40);	// Set Y address (column=0) 
+}
+*/
