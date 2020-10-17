@@ -86,6 +86,7 @@ void TI_set(void/*int duty*/);				//타이머인터럽트 세팅
 
 //Options : Based on Mission//
 void FND_init(void);						//FND 초기화: DDRx, PORTx
+void ADC_init(void);
 void FND_show(void);						//FND에 값 출력: FND_seg_num함수 활용
 void FND_seg_num(int seg, int font);
 
@@ -104,6 +105,7 @@ int main(void)
 	
     while (1) 
     {
+		
 		_delay_us(10);
 		
     }
@@ -190,6 +192,9 @@ void TI_set(void/*int duty*/){
 
 //Options : Based on Mission//
 void FND_init(void){
+	return;
+}
+void ADC_init(void){
 	return;
 }
 void FND_show(void){
