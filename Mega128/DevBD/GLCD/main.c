@@ -35,29 +35,60 @@
  */
 
 /* GLCD pinout Matching Table
+ * pin_map					PC0	PC1	PC2	PC3	PC4	PC5	PC6	PC7	PF0	PF1	PF2	PF3	PF4	PF5
  * pin_num		1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20
- * DevBD		Vdd	Vss	Vo	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	/CS1/CS2RST	R/W	RS	E	Vee	A	K
- * Matching		2	1	3	7	8	9	10	11	12	13	14	/15	/16	/17	5	4	6	18	19	20		
- * SGB1286411	Vss	Vdd	Vo	RS	R/W	E	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	CS1	CS2	/RSTVee	A	K
+ * DevBD		Vdd	Vss	Vo	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	/CS1/CS2/RSTR/W	RS	E	Vee	A	K
+ * Matching		-											Rev	Rev
+ * SGB1286411	Vdd	Vss	Vo	DB0	DB1	DB2	DB3	DB4	DB5	DB6	DB7	CS1	CS2	/RSTR/W	RS	E	VoutA	K	
  * Matching: DevBD -> SGB1286411
  * Method : DevBD -> Jumper Connector -> GLCD(Bread Board)
  */
 
+/* KS0108B Driver(ref : pdf document)
+ * Output Resistor
+ * RS	R/W		Function
+ * L	L		Instruction
+ * L	H		Status read(busy check)
+ * H	L		Data Write
+ * H	H		Data Read
+ * 
+ * Busy Flag
+ * After E fall, T Busy : 4.3~12.9 us
+ * 
+ */
+
+//Deb B/D Configuration//
+//#define 	ORIGINAL				//Reference: https://www.electronicwings.com/avr-atmega/graphical-lcd-128x64-interfacing-with-atmega1632
+#define		MESL_BME_KKU			//KKU MESL BME lab Board
+
+//GLCD B/D Configuration//
+//#define 	ABG128064H05			//DebBD Original Schematic
+#define 	SGB1286411				//extra GLCD
+//#define 	LCD12864				//DFrobot Arduino LCD12864
+
+//GLCD Driver Configuration//
+#define 	S6B0108B				//ABG128064H05
+//#define	KS0108B					//SGB1286411
+//#define 	ST7920					//LCD12864
+
 //GLCD Configuration//
-#define Data_Port		PORTC		//For DevBD
-#define Command_Port	PORTF		//For DevBD
-#define Data_Port_Dir	DDRC		//For DevBD
-#define Command_Port_Dir DDRF		//For DevBD
+#ifdef MESL_BME_KKU
+#define Data_Port			PORTC	//For DevBD
+#define Command_Port		PORTF	//For DevBD
+#define Data_Port_Dir		DDRC	//For DevBD
+#define Command_Port_Dir 	DDRF	//For DevBD
 #define RS		PF4
 #define RW		PF3
 #define EN		PF5
 #define CS1		PF0
 #define CS2		PF1
 #define RST		PF2
+#endif
 
+//???
 #define TotalPage	 8		//Purpose?
 
-/* Reference: https://www.electronicwings.com/avr-atmega/graphical-lcd-128x64-interfacing-with-atmega1632
+#ifdef ORIGINAL
 #define Data_Port	 PORTA			// Define data port for GLCD 
 #define Command_Port	 PORTC		// Define command port for GLCD 
 #define Data_Port_Dir	 DDRA		// Define data port for GLCD 
@@ -70,7 +101,7 @@
 #define RST		 PC5
 
 #define TotalPage	 8
-*/
+#endif
 
 //initiation//
 void BD_init(void);							//예비
@@ -105,9 +136,7 @@ int main(void)
 	
     while (1) 
     {
-		
-		_delay_us(10);
-		
+		_delay_us(10);	
     }
 }
 
@@ -123,9 +152,21 @@ ISR (TIMER1_OVF_vect)    // Timer1 ISR
 void BD_init(void){
 	return;
 }
+
+/* Bit Operation Practice....
+00111100
+and
+11001111
+==
+00001100
+turn off 5, 6
+*/
+
 void GLCD_init(void){
 	Data_Port_Dir = 0xFF;
 	Command_Port_Dir = 0xFF;
+	Command_Port = (1 << RST) | ()
+	#ifdef SGB1286411
 	/* Select both left & right half of display & Keep reset pin high */
 	Command_Port |= (1 << CS1) | (1 << CS2) | (1 << RST);
 	_delay_ms(20);
@@ -134,6 +175,7 @@ void GLCD_init(void){
 	GLCD_Command(0xB8);		/* Set x address (page=0) */
 	GLCD_Command(0xC0);		/* Set z address (start line=0) */
 	GLCD_Command(0x3F);		/* Display ON */
+	#endif
 }
 void TI_init(void){
 	//DDRD = (0x01 << LED);					//Configure the PORTD4 as output
