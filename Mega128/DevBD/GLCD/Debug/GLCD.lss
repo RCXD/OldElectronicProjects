@@ -11,21 +11,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000023c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000098  00000000  00000000  0000027c  2**0
+  4 .debug_aranges 000000a0  00000000  00000000  0000027c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000c93  00000000  00000000  00000314  2**0
+  5 .debug_info   00000cab  00000000  00000000  0000031c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000008f8  00000000  00000000  00000fa7  2**0
+  6 .debug_abbrev 00000910  00000000  00000000  00000fc7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000490  00000000  00000000  0000189f  2**0
+  7 .debug_line   0000049e  00000000  00000000  000018d7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000138  00000000  00000000  00001d30  2**2
+  8 .debug_frame  00000148  00000000  00000000  00001d78  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000004b2  00000000  00000000  00001e68  2**0
+  9 .debug_str    000004bb  00000000  00000000  00001ec0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000293  00000000  00000000  0000231a  2**0
+ 10 .debug_loc    00000293  00000000  00000000  0000237b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000088  00000000  00000000  000025ad  2**0
+ 11 .debug_ranges 00000090  00000000  00000000  0000260e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -197,16 +197,18 @@ void GLCD_Command(char Command){
  106:	08 95       	ret
 
 00000108 <GLCD_init>:
-//initiation//
-void BD_init(void){
-	return;
-}
+ * 
+ * 
+ */
+
 void GLCD_init(void){
 	Data_Port_Dir = 0xFF;
  108:	8f ef       	ldi	r24, 0xFF	; 255
  10a:	84 bb       	out	0x14, r24	; 20
 	Command_Port_Dir = 0xFF;
  10c:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <__TEXT_REGION_LENGTH__+0x7e0061>
+	//Command_Port = (1 << RST) | ()
+	#ifdef SGB1286411
 	/* Select both left & right half of display & Keep reset pin high */
 	Command_Port |= (1 << CS1) | (1 << CS2) | (1 << RST);
  110:	e2 e6       	ldi	r30, 0x62	; 98
