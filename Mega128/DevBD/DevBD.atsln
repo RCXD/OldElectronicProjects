@@ -9,6 +9,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "StepMtrControl", "StepMtrCo
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "GLCD", "GLCD\GLCD.cproj", "{EBB64E14-7F96-40BC-93BC-04D33ABD1047}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "GLCDTesting", "GLCDTesting\GLCDTesting.cproj", "{5BDAD0B5-6058-4E35-9163-54D22E6B58AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -27,6 +29,10 @@ Global
 		{EBB64E14-7F96-40BC-93BC-04D33ABD1047}.Debug|AVR.Build.0 = Debug|AVR
 		{EBB64E14-7F96-40BC-93BC-04D33ABD1047}.Release|AVR.ActiveCfg = Release|AVR
 		{EBB64E14-7F96-40BC-93BC-04D33ABD1047}.Release|AVR.Build.0 = Release|AVR
+		{5BDAD0B5-6058-4E35-9163-54D22E6B58AE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{5BDAD0B5-6058-4E35-9163-54D22E6B58AE}.Debug|AVR.Build.0 = Debug|AVR
+		{5BDAD0B5-6058-4E35-9163-54D22E6B58AE}.Release|AVR.ActiveCfg = Release|AVR
+		{5BDAD0B5-6058-4E35-9163-54D22E6B58AE}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

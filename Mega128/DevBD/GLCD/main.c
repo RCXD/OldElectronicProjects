@@ -154,14 +154,13 @@ void BD_init(void){
 }
 
 /* Bit Operation Practice....
-00111100
-and
-11001111
-==
-00001100
-turn off 5, 6
+00111100 and 11001111
+== 00001100 turn off 5, 6
 */
+
 /* 
+ * 
+ * 
  * 
  * 
  */
@@ -169,7 +168,7 @@ turn off 5, 6
 void GLCD_init(void){
 	Data_Port_Dir = 0xFF;
 	Command_Port_Dir = 0xFF;
-	Command_Port = (1 << RST) | ()
+	//Command_Port = (1 << RST) | ()
 	#ifdef SGB1286411
 	/* Select both left & right half of display & Keep reset pin high */
 	Command_Port |= (1 << CS1) | (1 << CS2) | (1 << RST);
@@ -188,7 +187,7 @@ void TI_init(void){
 	TCNT1 = 57724;		//for 1 sec at 8MHz
 
 	TCCR1A = 0x00;
-	TCCR1B = (1<<CS10) | (1<<CS12);;  // Timer mode with 1024 prescaler
+	TCCR1B = (1<<CS10) | (1<<CS12);  // Timer mode with 1024 prescaler
 	TIMSK = (1 << TOIE1) ;   // Enable timer1 overflow interrupt(TOIE1)
 	sei();        // Enable global interrupts by setting global interrupt enable bit in SREG
 	return;
