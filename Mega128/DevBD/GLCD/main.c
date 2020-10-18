@@ -161,6 +161,10 @@ and
 00001100
 turn off 5, 6
 */
+/* 
+ * 
+ * 
+ */
 
 void GLCD_init(void){
 	Data_Port_Dir = 0xFF;
