@@ -8,3 +8,11 @@
 3. ADC - ECG
 4. FND
 
+## Algorithm
+1. Read ADC > Exact timing(1)
+2. Calculate BPM > Exact timing(1)
+3. Show BPM while Plotting GLCD(pulse) > Adequate timing(2)
+    Update ratio:
+        Plotting: slow
+        FND: Fast
+
