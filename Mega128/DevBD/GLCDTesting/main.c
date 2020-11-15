@@ -209,7 +209,7 @@ void GLCD_String(char page_no, char *str)/* GLCD string write function */
 		break;
 		if (str[i]!=32)
 		{
-			for (column=1; column<=FontWidth; column++)
+			for (column=1; column<=FontWidth; column++) //한 폰트 내 col마다 엑세스
 			{
 				if ((Y_address+column)==(128*((int)(Page_inc+0.5))))
 				{
