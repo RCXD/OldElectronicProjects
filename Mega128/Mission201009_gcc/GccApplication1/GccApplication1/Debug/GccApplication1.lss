@@ -1,0 +1,219 @@
+
+GccApplication1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000010  00800100  0000010e  00000182  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000010e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000192  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001c4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000204  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000852  00000000  00000000  00000224  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007b1  00000000  00000000  00000a76  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000273  00000000  00000000  00001227  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  0000149c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000400  00000000  00000000  000014c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000005c  00000000  00000000  000018c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  0000191c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	58 c0       	rjmp	.+176    	; 0xb6 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	56 c0       	rjmp	.+172    	; 0xb6 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	54 c0       	rjmp	.+168    	; 0xb6 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	52 c0       	rjmp	.+164    	; 0xb6 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	50 c0       	rjmp	.+160    	; 0xb6 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	4e c0       	rjmp	.+156    	; 0xb6 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	4c c0       	rjmp	.+152    	; 0xb6 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	4a c0       	rjmp	.+148    	; 0xb6 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	48 c0       	rjmp	.+144    	; 0xb6 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	46 c0       	rjmp	.+140    	; 0xb6 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	44 c0       	rjmp	.+136    	; 0xb6 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	42 c0       	rjmp	.+132    	; 0xb6 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	40 c0       	rjmp	.+128    	; 0xb6 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	3e c0       	rjmp	.+124    	; 0xb6 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	3c c0       	rjmp	.+120    	; 0xb6 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	3a c0       	rjmp	.+116    	; 0xb6 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	38 c0       	rjmp	.+112    	; 0xb6 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	36 c0       	rjmp	.+108    	; 0xb6 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	34 c0       	rjmp	.+104    	; 0xb6 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	32 c0       	rjmp	.+100    	; 0xb6 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	30 c0       	rjmp	.+96     	; 0xb6 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	2e c0       	rjmp	.+92     	; 0xb6 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	2c c0       	rjmp	.+88     	; 0xb6 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	2a c0       	rjmp	.+84     	; 0xb6 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	28 c0       	rjmp	.+80     	; 0xb6 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	26 c0       	rjmp	.+76     	; 0xb6 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	24 c0       	rjmp	.+72     	; 0xb6 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	22 c0       	rjmp	.+68     	; 0xb6 <__bad_interrupt>
+  72:	00 00       	nop
+  74:	20 c0       	rjmp	.+64     	; 0xb6 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	1e c0       	rjmp	.+60     	; 0xb6 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	1c c0       	rjmp	.+56     	; 0xb6 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	1a c0       	rjmp	.+52     	; 0xb6 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	18 c0       	rjmp	.+48     	; 0xb6 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	16 c0       	rjmp	.+44     	; 0xb6 <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e1       	ldi	r29, 0x10	; 16
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	ee e0       	ldi	r30, 0x0E	; 14
+  a0:	f1 e0       	ldi	r31, 0x01	; 1
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	a0 31       	cpi	r26, 0x10	; 16
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+  b2:	02 d0       	rcall	.+4      	; 0xb8 <main>
+  b4:	2a c0       	rjmp	.+84     	; 0x10a <_exit>
+
+000000b6 <__bad_interrupt>:
+  b6:	a4 cf       	rjmp	.-184    	; 0x0 <__vectors>
+
+000000b8 <main>:
+0x80, 0x90, 0x88, 0x83, 0xc6, 0xa1, 0x86, 0x8e};
+
+int main(void){
+	int n, loop;
+	
+	DDRA = 0xff;
+  b8:	8f ef       	ldi	r24, 0xFF	; 255
+  ba:	8a bb       	out	0x1a, r24	; 26
+	DDRB = 0xff;
+  bc:	87 bb       	out	0x17, r24	; 23
+	TCCR0 = 0b00000111;
+  be:	87 e0       	ldi	r24, 0x07	; 7
+  c0:	83 bf       	out	0x33, r24	; 51
+	TCNT0 = 112;
+  c2:	80 e7       	ldi	r24, 0x70	; 112
+  c4:	82 bf       	out	0x32, r24	; 50
+	
+	PORTB = 0xf0;
+  c6:	80 ef       	ldi	r24, 0xF0	; 240
+  c8:	88 bb       	out	0x18, r24	; 24
+  ca:	04 c0       	rjmp	.+8      	; 0xd4 <main+0x1c>
+		for (loop = 1; loop <= 100; loop++){
+			while(!(TIFR & 0b00000001));
+			TIFR |= 0b00000001;
+			TCNT0 = 112;
+		}
+		PORTA = SEG[n++];
+  cc:	ac 01       	movw	r20, r24
+  ce:	02 c0       	rjmp	.+4      	; 0xd4 <main+0x1c>
+		if(n>= 10) n= 0;
+  d0:	40 e0       	ldi	r20, 0x00	; 0
+  d2:	50 e0       	ldi	r21, 0x00	; 0
+	TCCR0 = 0b00000111;
+	TCNT0 = 112;
+	
+	PORTB = 0xf0;
+	while(1){
+		for (loop = 1; loop <= 100; loop++){
+  d4:	21 e0       	ldi	r18, 0x01	; 1
+  d6:	30 e0       	ldi	r19, 0x00	; 0
+  d8:	0a c0       	rjmp	.+20     	; 0xee <main+0x36>
+			while(!(TIFR & 0b00000001));
+  da:	06 b6       	in	r0, 0x36	; 54
+  dc:	00 fe       	sbrs	r0, 0
+  de:	fd cf       	rjmp	.-6      	; 0xda <main+0x22>
+			TIFR |= 0b00000001;
+  e0:	86 b7       	in	r24, 0x36	; 54
+  e2:	81 60       	ori	r24, 0x01	; 1
+  e4:	86 bf       	out	0x36, r24	; 54
+			TCNT0 = 112;
+  e6:	80 e7       	ldi	r24, 0x70	; 112
+  e8:	82 bf       	out	0x32, r24	; 50
+	TCCR0 = 0b00000111;
+	TCNT0 = 112;
+	
+	PORTB = 0xf0;
+	while(1){
+		for (loop = 1; loop <= 100; loop++){
+  ea:	2f 5f       	subi	r18, 0xFF	; 255
+  ec:	3f 4f       	sbci	r19, 0xFF	; 255
+  ee:	25 36       	cpi	r18, 0x65	; 101
+  f0:	31 05       	cpc	r19, r1
+  f2:	9c f3       	brlt	.-26     	; 0xda <main+0x22>
+			while(!(TIFR & 0b00000001));
+			TIFR |= 0b00000001;
+			TCNT0 = 112;
+		}
+		PORTA = SEG[n++];
+  f4:	ca 01       	movw	r24, r20
+  f6:	01 96       	adiw	r24, 0x01	; 1
+  f8:	fa 01       	movw	r30, r20
+  fa:	e0 50       	subi	r30, 0x00	; 0
+  fc:	ff 4f       	sbci	r31, 0xFF	; 255
+  fe:	20 81       	ld	r18, Z
+ 100:	2b bb       	out	0x1b, r18	; 27
+		if(n>= 10) n= 0;
+ 102:	8a 30       	cpi	r24, 0x0A	; 10
+ 104:	91 05       	cpc	r25, r1
+ 106:	24 f7       	brge	.-56     	; 0xd0 <main+0x18>
+ 108:	e1 cf       	rjmp	.-62     	; 0xcc <main+0x14>
+
+0000010a <_exit>:
+ 10a:	f8 94       	cli
+
+0000010c <__stop_program>:
+ 10c:	ff cf       	rjmp	.-2      	; 0x10c <__stop_program>

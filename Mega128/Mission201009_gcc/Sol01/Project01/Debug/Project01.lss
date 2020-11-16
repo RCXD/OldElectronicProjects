@@ -199,7 +199,7 @@ void GLCD_handler(char rs, char cs, char data)
 {
 	//__delay_cycles(1); // 연속된 신호 입력에 따른 오류 방지용 delay
 	_delay_us(1);
-	PORTF = 0x00;   // Control Port가 새로운 입력을 받을 수 있는 상태로 만든다.
+	PORTF = 0x00;   // Control Port가 새로운 입력을 받을 수 있는 상태로 만든다. //대체 왜?
   fe:	e2 e6       	ldi	r30, 0x62	; 98
  100:	f0 e0       	ldi	r31, 0x00	; 0
  102:	10 82       	st	Z, r1
