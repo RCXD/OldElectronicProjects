@@ -21,7 +21,7 @@ int main(void){
 		for (loop = 1; loop <= 100; loop++){
 			while(!(TIFR & 0b00000001));
 			TIFR |= 0b00000001;
-			TNCT0 = 112;
+			TCNT0 = 112;
 		}
 		PORTA = SEG[n++];
 		if(n>= 10) n= 0;
