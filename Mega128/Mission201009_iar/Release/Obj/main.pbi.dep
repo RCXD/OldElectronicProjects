@@ -1,0 +1,6 @@
+main.pbi: \
+  C:\GitHub\OldElectronicProjects\Mega128\Mission201009_iar\main.c \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\avr\inc\iom128.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\avr\inc/iomacro.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\avr\inc/bitdefinitions/iom128.inc \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\avr\inc\intrinsics.h

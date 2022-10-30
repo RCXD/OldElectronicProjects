@@ -13,53 +13,29 @@
     <configuration>
         <name>Release</name>
         <outputs>
+            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\peri.c</file>
+            <file>$PROJ_DIR$\Release\Obj\main.xcl</file>
             <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
             <file>$TOOLKIT_DIR$\inc\iom128.h</file>
-            <file>$PROJ_DIR$\Release\Obj\main.r90</file>
-            <file>$PROJ_DIR$\Release\Obj\main.xcl</file>
-            <file>$TOOLKIT_DIR$\lib\dlib\dlAVR-3s-ec_mul-n.r90</file>
+            <file>$PROJ_DIR$\Release\Obj\prj1119.pbd</file>
+            <file>$PROJ_DIR$\Release\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\Release\Obj\peri.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
+            <file>$TOOLKIT_DIR$\src\template\cfgm128a.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\bitdefinitions\iom128.inc</file>
+            <file>$PROJ_DIR$\Release\List\prj1119.map</file>
             <file>$TOOLKIT_DIR$\src\template\cfg3soim.xcl</file>
             <file>$PROJ_DIR$\Release\Exe\prj1119.hex</file>
-            <file>$TOOLKIT_DIR$\src\template\cfgm128a.xcl</file>
-            <file>$PROJ_DIR$\peri.c</file>
-            <file>$PROJ_DIR$\Release\Obj\peri.xcl</file>
-            <file>$PROJ_DIR$\Release\List\prj1119.map</file>
-            <file>$PROJ_DIR$\Release\Obj\main.__cstat.et</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
-            <file>$TOOLKIT_DIR$\inc\bitdefinitions\iom128.inc</file>
-            <file>$PROJ_DIR$\Release\Obj\prj1119.pbd</file>
+            <file>$PROJ_DIR$\Release\Obj\main.r90</file>
+            <file>$TOOLKIT_DIR$\lib\dlib\dlAVR-3s-ec_mul-n.r90</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 10 6</file>
-                </tool>
-            </outputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\Release\Exe\prj1119.hex</name>
-            <outputs>
-                <tool>
-                    <name>XLINK</name>
-                    <file> 10</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>XLINK</name>
-                    <file> 7 5 2 4</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\peri.c</name>
-            <outputs>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 9</file>
+                    <file> 11 13</file>
                 </tool>
             </outputs>
         </file>
@@ -68,21 +44,45 @@
             <outputs>
                 <tool>
                     <name>ICCAVR</name>
-                    <file> 2</file>
+                    <file> 14</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 3</file>
+                    <file> 2</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 11</file>
+                    <file> 6</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCAVR</name>
-                    <file> 1 13 14 0</file>
+                    <file> 4 8 10 3</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\peri.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 7</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Release\Exe\prj1119.hex</name>
+            <outputs>
+                <tool>
+                    <name>XLINK</name>
+                    <file> 11</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>XLINK</name>
+                    <file> 9 12 14 15</file>
                 </tool>
             </inputs>
         </file>
